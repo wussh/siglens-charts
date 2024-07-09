@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-    name: {{ include "siglens.fullname" . }}
-    namespace: {{ .Release.Namespace }}
-    labels:
-        {{ include "siglens-server.labels" . | nindent 6 }}
+  name: {{ include "siglens.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{ include "siglens-server.labels" . | nindent 6 }}
 spec:
   selector:
     matchLabels:
@@ -37,19 +37,11 @@ spec:
           startupProbe:
             httpGet:
               path: /api/health
-              port: queryport
-              scheme: HTTP
-            httpGet:
-              path: /api/health
               port: ingestport
               scheme: HTTP
             failureThreshold: 30
             periodSeconds: 1
           livenessProbe:
-            httpGet:
-              path: /api/health
-              port: queryport
-              scheme: HTTP
             httpGet:
               path: /api/health
               port: ingestport
